@@ -13,11 +13,28 @@ breed_rank_all <- readr::read_csv('https://raw.githubusercontent.com/rfordatasci
 unique(breed_rank_all$Breed)
 unique(breed_traits$Breed)
 
-## find rows in ranking dataset where breeds have NA rank
+## filter out rows in ranking dataset where breeds have NA rank
 missing_rank <- subset(breed_rank_all, is.na(breed_rank_all$x2013_rank))
+nonmissing_rank <- subset(breed_rank_all, !is.na(breed_rank_all$x2013_rank))
 
 
-breed_traits_rank <- left_join(breed_traits, breed_rank_all)
+## join the data
+breed_traits_rank<- inner_join(breed_traits, breed_rank_all, by = "breed")
+breed_ranks <- breed_rank_all %>% 
+  mutate(
+    breed = 
+      str_replace(breed,
+                  pattern = " ",
+                  replacement = "_")
+  ) 
+  mutate(
+    breed =
+      str_remove(breed,
+                 pattern = "(",
+                 replacement = "")
+  )
+## looks like join is not working due to spaces or () in column, lets get rid of them
+## and see what that does
 
-unique(breed_traits_rank$Breed)
-x <- breed_traits_rank[1,]
+## looking at breed ranks
+!is.na
