@@ -6,8 +6,18 @@ breed_traits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascien
   janitor::clean_names()
 trait_description <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/trait_description.csv') %>% 
   janitor::clean_names()
-breed_rank_all <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/breed_rank.csv') %>% 
-  janitor::clean_names()
+breed_rank_all <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-02-01/breed_rank.csv')
+
+
+
+## cool photo
+rank <- breed_rank_all %>% 
+  count(Breed, `2020 Rank`, Image) %>% 
+  arrange(`2020 Rank`) %>% 
+  slice(1:5) %>% 
+  relocate(`2020 Rank`) %>% 
+  select(-n)
+
 
 ## join the data
 unique(breed_rank_all$Breed)
