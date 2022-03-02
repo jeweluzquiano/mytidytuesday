@@ -24,6 +24,7 @@ breed_rank_all$breed <- gsub(" ", "", breed_rank_all$breed)
 breed_rank_all$breed<- gsub("[(]","", breed_rank_all$breed)
 breed_rank_all$breed<- gsub("[)]","", breed_rank_all$breed)
 
+breed_traits$breeds <- as.character(breed_traits$breed)
 breed_traits$breed <- gsub("[(]", "", breed_traits$breed)
 breed_traits$breed <- gsub("[)]", "", breed_traits$breed)
 breed_traits$breed <- str_remove(breed_traits$breed, " ")
@@ -42,7 +43,7 @@ str_trim("\n\nString with trailing and leading white space\n\n")
 breeds_r <- breed_rank_all$breed
 class(breeds_r)
 str_squish(breeds_r)
-breeds<- breed_traits$breed
+breeds<- breed_traits$breeds
 str_remove(breeds, " ")
 
 ## looks like join is not working due to spaces or () in column, lets get rid of them
