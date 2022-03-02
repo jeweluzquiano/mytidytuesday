@@ -21,15 +21,29 @@ nonmissing_rank <- subset(breed_rank_all, !is.na(breed_rank_all$x2013_rank))
 ## join the data
 ##sub out ()
 breed_rank_all$breed <- gsub(" ", "", breed_rank_all$breed)
-breed_rank_all$breed<- gsub("[()]","_", breed_rank_all$breed)
+breed_rank_all$breed<- gsub("[(]","", breed_rank_all$breed)
+breed_rank_all$breed<- gsub("[)]","", breed_rank_all$breed)
 
-breed_traits$breed <- gsub(" ", "", breed_traits$breed)
-breed_traits$breed <- gsub("[ ()]", "_", breed_traits$breed)
+breed_traits$breed <- gsub("[(]", "", breed_traits$breed)
+breed_traits$breed <- gsub("[)]", "", breed_traits$breed)
+breed_traits$breed <- str_remove(breed_traits$breed, " ")
 
-breed_traits_rank<- left_join(breed_traits, breed_rank_all, by = "breed_nosp")
+breed_traits_rank<- left_join(breed_traits, breed_rank_all, by = "breed")
 
-# fruits <- c("one (apple", "two pears", "three bananas")
-# str_remove(fruits, "[aeiou]")
+fruits <- c("one apple", "two pears", "three bananas")
+str_remove(fruits, " ")
+
+str_squish("  String with trailing,  middle, and leading white space\t")
+str_squish("\n\nString with excess,  trailing and leading white   space\n\n")
+
+str_trim("  String with trailing and leading white space\t")
+str_trim("\n\nString with trailing and leading white space\n\n")
+
+breeds_r <- breed_rank_all$breed
+class(breeds_r)
+str_squish(breeds_r)
+breeds<- breed_traits$breed
+str_remove(breeds, " ")
 
 ## looks like join is not working due to spaces or () in column, lets get rid of them
 ## and see what that does
