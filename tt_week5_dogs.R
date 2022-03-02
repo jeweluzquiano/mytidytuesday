@@ -19,20 +19,18 @@ nonmissing_rank <- subset(breed_rank_all, !is.na(breed_rank_all$x2013_rank))
 
 
 ## join the data
-breed_traits_rank<- inner_join(breed_traits, breed_rank_all, by = "breed")
-breed_ranks <- breed_rank_all %>% 
-  mutate(
-    breed = 
-      str_replace(breed,
-                  pattern = " ",
-                  replacement = "_")
-  ) 
-  mutate(
-    breed =
-      str_remove(breed,
-                 pattern = "(",
-                 replacement = "")
-  )
+##sub out ()
+breed_rank_all$breed <- gsub(" ", "", breed_rank_all$breed)
+breed_rank_all$breed<- gsub("[()]","_", breed_rank_all$breed)
+
+breed_traits$breed <- gsub(" ", "", breed_traits$breed)
+breed_traits$breed <- gsub("[ ()]", "_", breed_traits$breed)
+
+breed_traits_rank<- left_join(breed_traits, breed_rank_all, by = "breed_nosp")
+
+# fruits <- c("one (apple", "two pears", "three bananas")
+# str_remove(fruits, "[aeiou]")
+
 ## looks like join is not working due to spaces or () in column, lets get rid of them
 ## and see what that does
 
