@@ -50,4 +50,5 @@ str_remove(breeds, " ")
 ## and see what that does
 
 ## looking at breed ranks
-!is.na
+ggplot(data = breed_rank_all) +
+  geom_line(mapping = aes(x = breed, y = x2013_rank))
